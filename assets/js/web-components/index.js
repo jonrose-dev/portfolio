@@ -1,45 +1,45 @@
 class LineTyper extends HTMLElement {
-    constructor() {
-        super();
-        this.root = this.attachShadow({ mode: 'open' });
-        this.render = this.render.bind(this);
-        this.typeNextLetter = this.typeNextLetter.bind(this);
-        this.render();
+  constructor() {
+    super();
+    this.root = this.attachShadow({ mode: 'open' });
+    this.render = this.render.bind(this);
+    this.typeNextLetter = this.typeNextLetter.bind(this);
+    this.render();
+  }
+  static get observedAttributes() {
+    return ['text', 'path'];
+  }
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    if (name === 'text') {
+      this.textArray = newValue.split('');
+      setTimeout(this.typeNextLetter, 1500);
+    } else {
+      this.root.getElementById('pathName').innerHTML = `&nbsp;${newValue}&nbsp;`;
     }
-    static get observedAttributes() {
-        return ['text', 'path'];
-    }
-    attributeChangedCallback(name, oldValue, newValue) {
-        if (oldValue === newValue) return;
-        if (name === 'text') {
-            this.textArray = newValue.split('');
-            setTimeout(this.typeNextLetter, 1500);
-        } else {
-            this.root.getElementById('pathName').innerHTML = `&nbsp;${newValue}&nbsp;`;
-        }
 
-    }
-    typeNextLetter() {
-        const nextLetter = this.textArray.shift();
-        const randomVariability = Math.random() * 200;
-        setTimeout(_ => {
-            this.root.getElementById('textLine').innerHTML = this.root.getElementById('textLine').innerHTML + nextLetter;
-            // If this is the final letter
-            if (!this.textArray[0]) {
-                const className = this.hasAttribute('showBlinkingCaret') ? 'blink' : 'hide'
-                this.root.getElementById('caret').className = `${className} caret`;
-                // Insert pause to mock computer processing request
-                return setTimeout(_ => {
-                    this.root.getElementById('resultsDiv').innerHTML = (this.properties.results || []).map(result => `<div>${result}</div>`).join('');
-                    // View results before typing next line
-                    this.properties.onComplete && this.properties.onComplete();
-                }, 300)
-            }
-            this.typeNextLetter();
-        }, randomVariability + 100);
-    }
-    render() {
-        this.root.innerHTML = /*html*/`
+  }
+  typeNextLetter() {
+    const nextLetter = this.textArray.shift();
+    const randomVariability = Math.random() * 200;
+    setTimeout(_ => {
+      this.root.getElementById('textLine').innerHTML = this.root.getElementById('textLine').innerHTML + nextLetter;
+      // If this is the final letter
+      if (!this.textArray[0]) {
+        const className = this.hasAttribute('showBlinkingCaret') ? 'blink' : 'hide'
+        this.root.getElementById('caret').className = `${className} caret`;
+        // Insert pause to mock computer processing request
+        return setTimeout(_ => {
+          this.root.getElementById('resultsDiv').innerHTML = (this.properties.results || []).map(result => `<div>${result}</div>`).join('');
+          // View results before typing next line
+          this.properties.onComplete && this.properties.onComplete();
+        }, 300)
+      }
+      this.typeNextLetter();
+    }, randomVariability + 100);
+  }
+  render() {
+    this.root.innerHTML = /*html*/`
                 <style>
                 .blink {
                     color: white;
@@ -125,85 +125,85 @@ class LineTyper extends HTMLElement {
             </div>
             <div id="resultsDiv"></div>
         `;
-    }
+  }
 }
 window.customElements.define('line-typer', LineTyper);
 
 
 const terminalLines = [
-    {
-        path: '~/Jon/Skills',
-        input: 'ls',
-        results: ['React', 'JavaScript', 'GraphQL', 'Node', 'HTML', 'CSS', 'SCSS', 'Web-Components', 'Ruby', 'Swift', 'SwiftUI'],
-    },
-    {
-        path: '~/Jon/Skills',
-        input: 'cd ..',
-        results: [],
-    },
-    {
-        path: '~/Jon',
-        input: 'ls',
-        results: ['Skills', 'Interests', 'My-Work'],
-    },
-    {
-        path: '~/Jon',
-        input: 'cd Interests',
-        results: [],
-    },
-    {
-        path: '~/Jon/Interests',
-        input: 'ls',
-        results: ['Code', 'Baseball', 'Cars', 'Technology', 'Games']
-    },
-    {
-        path: '~/Jon/Interests',
-        input: 'cd ..',
-        results: [],
-    },
-    {
-        path: '~/Jon',
-        input: 'cd My-Work',
-        results: [],
-    },
-    {
-        path: '~/Jon/My-Work',
-        input: 'ls',
-        results: ['Breeze_Web', 'Go', 'CareCloud', 'Edukit', 'Wyncode'],
-    },
-    {
-        path: '~/Jon/My-Work',
-        input: 'mkdir ??',
-        results: [],
-    },
+  {
+    path: '~/Jon/Skills',
+    input: 'ls',
+    results: ['React', 'TypeScript', 'JavaScript', 'GraphQL', 'styled-components', 'Node', 'HTML', 'CSS', 'SCSS', 'Web-Components', 'Ruby', 'Swift', 'SwiftUI'],
+  },
+  {
+    path: '~/Jon/Skills',
+    input: 'cd ..',
+    results: [],
+  },
+  {
+    path: '~/Jon',
+    input: 'ls',
+    results: ['Skills', 'Interests', 'My-Work'],
+  },
+  {
+    path: '~/Jon',
+    input: 'cd Interests',
+    results: [],
+  },
+  {
+    path: '~/Jon/Interests',
+    input: 'ls',
+    results: ['Code', 'Baseball', 'Cars', 'Technology', 'Games']
+  },
+  {
+    path: '~/Jon/Interests',
+    input: 'cd ..',
+    results: [],
+  },
+  {
+    path: '~/Jon',
+    input: 'cd My-Work',
+    results: [],
+  },
+  {
+    path: '~/Jon/My-Work',
+    input: 'ls',
+    results: ['RBI', 'Burger King', 'Popeyes', 'Tim Hortons', 'Breeze_Web', 'Go', 'CareCloud', 'Wyncode'],
+  },
+  {
+    path: '~/Jon/My-Work',
+    input: 'mkdir ??',
+    results: [],
+  },
 ];
 
 class TerminalEmulator extends HTMLElement {
-    constructor() {
-        super();
-        this.root = this.attachShadow({ mode: 'open' });
-        this.render = this.render.bind(this);
-        this.addLineTypers = this.addLineTypers.bind(this);
-        this.render();
-        this.addLineTypers();
-    }
+  constructor() {
+    super();
+    this.root = this.attachShadow({ mode: 'open' });
+    this.render = this.render.bind(this);
+    this.addLineTypers = this.addLineTypers.bind(this);
+    this.render();
+    this.addLineTypers();
+  }
 
-    addLineTypers() {
-        if (!terminalLines.length) return;
-        const lineTyper = document.createElement('line-typer');
-        const { path, input, results } = terminalLines.shift();
-        lineTyper.setAttribute('text', input);
-        lineTyper.setAttribute('path', path);
-        const showBlinkingCaret = !terminalLines.length;
-        showBlinkingCaret && lineTyper.setAttribute('showBlinkingCaret', true)
-        lineTyper.properties = { onComplete: this.addLineTypers, results };
-        this.root.querySelector('div#lineTypers').appendChild(lineTyper)
-    }
+  addLineTypers() {
+    if (!terminalLines.length) return;
+    const lineTyper = document.createElement('line-typer');
+    const { path, input, results } = terminalLines.shift();
+    lineTyper.setAttribute('text', input);
+    lineTyper.setAttribute('path', path);
+    const showBlinkingCaret = !terminalLines.length;
+    showBlinkingCaret && lineTyper.setAttribute('showBlinkingCaret', true)
+    lineTyper.properties = { onComplete: this.addLineTypers, results };
+    this.root.querySelector('div#lineTypers').appendChild(lineTyper)
+  }
 
-    render() {
-        const { innerWidth } = window;
-        const isSmall = innerWidth < 1000;
-        this.root.innerHTML = /*html*/`
+  render() {
+    const { innerWidth } = window;
+    const isSmall = innerWidth < 1000;
+    this.root.innerHTML = /*html*/`
             <style>
                 .wrapper {
                     animation: appear ease-out 0.8s;
@@ -272,6 +272,6 @@ class TerminalEmulator extends HTMLElement {
                 <div id="lineTypers"><div>
             </div>
         `;
-    }
+  }
 }
 window.customElements.define('terminal-emulator', TerminalEmulator);
