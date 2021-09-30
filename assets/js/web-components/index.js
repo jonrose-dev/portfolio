@@ -134,7 +134,7 @@ const terminalLines = [
   {
     path: '~/Jon/Skills',
     input: 'ls',
-    results: ['React', 'TypeScript', 'JavaScript', 'GraphQL', 'styled-components', 'Node', 'HTML', 'CSS', 'SCSS', 'Web-Components', 'Ruby', 'Swift', 'SwiftUI'],
+    results: ['React', 'TypeScript', 'Bazel', 'StencilJS', 'JavaScript', 'GraphQL', 'styled-components', 'Jest', 'Node', 'HTML', 'CSS', 'SCSS', 'Web-Components', 'Go', 'AWS', 'Azure Devops', 'Ruby', 'Swift', 'SwiftUI'],
   },
   {
     path: '~/Jon/Skills',
@@ -169,7 +169,7 @@ const terminalLines = [
   {
     path: '~/Jon/My-Work',
     input: 'ls',
-    results: ['RBI', 'Burger King', 'Popeyes', 'Tim Hortons', 'Breeze_Web', 'Go', 'CareCloud', 'Wyncode'],
+    results: ['Inovalon', 'RBI', 'Burger King', 'Popeyes', 'Tim Hortons', 'Breeze_Web', 'Go', 'CareCloud', 'Wyncode'],
   },
   {
     path: '~/Jon/My-Work',
