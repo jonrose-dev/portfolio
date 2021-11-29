@@ -98,7 +98,6 @@ section#currentWork {
     font-family: 'Roboto Mono';
     padding-top: 24px;
     height: fit-content;
-    min-height: 100vh;
     color: white;
     background: #ffb74d;
     display: flex;

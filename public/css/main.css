@@ -98,7 +98,6 @@ section#currentWork {
     font-family: 'Roboto Mono';
     padding-top: 24px;
     height: fit-content;
-    min-height: 100vh;
     color: white;
     background: #ffb74d;
     display: flex;
@@ -126,6 +125,7 @@ section#currentWork img#Employer {
     max-width: 350px;
     width: 85vw;
     margin-bottom: 50px;
+    background-color: white;
 }
 
 section#currentWork h4 {
@@ -181,12 +181,12 @@ section#currentWork li h5 {
 
 section#contact {
     height: fit-content;
-    padding-top: 24px;
     color: white;
     background: rgb(77, 175, 80);
     display: flex;
     flex-direction: column;
-    align-items: center
+    align-items: center;
+    padding: 24px;
 }
 section#contact h2 {
     text-align: center;
